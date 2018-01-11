@@ -241,11 +241,11 @@ public:
         nBlockLastGoodCheckpoint = 9891730; //Last valid accumulator checkpoint
         
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1515524400;
-        genesis.nNonce = 732084;
+        genesis.nTime = 1515616140;
+        genesis.nNonce = 79855;
 
-        hashGenesisBlock = genesis.GetHash();
-        //assert(hashGenesisBlock == uint256("0x000008415bdca132b70cf161ecc548e5d0150fd6634a381ee2e99bb8bb77dbb3"));
+	    hashGenesisBlock = genesis.GetHash();
+        assert(hashGenesisBlock == uint256("0x000007cff63ef602a51bf074e384b3516f0dd202f14d52f7c8c9b1af9423ab2e"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
