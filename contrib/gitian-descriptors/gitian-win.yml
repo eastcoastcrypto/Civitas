@@ -1,5 +1,5 @@
 ---
-name: "civitas-win-3.0"
+name: "civitas-win-1.1"
 enable_cache: true
 suites:
 - "trusty"
@@ -22,7 +22,7 @@ packages:
 - "ca-certificates"
 - "python"
 remotes:
-- "url": "https://github.com/civitasproject/civitas.git"
+- "url": "https://github.com/eastcoastcrypto/Civitas"
   "dir": "civitas"
 files: []
 script: |
