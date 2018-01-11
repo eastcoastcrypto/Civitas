@@ -44,7 +44,7 @@ Instructions: Homebrew
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone https://github.com/civitasproject/Civitas.git
+        git clone https://github.com/eastcoastcrypto/Civitas.git
         cd Civitas
 
 2.  Build civitasd:

@@ -89,7 +89,7 @@ use old versions of Upstart and do not supply the start-stop-daemon uitility.
 Copy civitasd.init to /etc/init.d/civitasd. Test by running "service civitasd start".
 
 Using this script, you can adjust the path and flags to the civitasd program by
-setting the CivitasD and FLAGS environment variables in the file
+setting the CIVITASD and FLAGS environment variables in the file
 /etc/sysconfig/civitasd. You can also use the DAEMONOPTS environment variable here.
 
 5. Auto-respawn

@@ -1,4 +1,5 @@
 // Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2017-2018 The Civitas developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,16 +15,16 @@ class CZerocoinMint;
 class WalletModel;
 
 namespace Ui {
-class ZPhrControlDialog;
+class ZCivControlDialog;
 }
 
-class ZPhrControlDialog : public QDialog
+class ZCivControlDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ZPhrControlDialog(QWidget *parent);
-    ~ZPhrControlDialog();
+    explicit ZCivControlDialog(QWidget *parent);
+    ~ZCivControlDialog();
 
     void setModel(WalletModel* model);
 
@@ -32,7 +33,7 @@ public:
     static std::vector<CZerocoinMint> GetSelectedMints();
 
 private:
-    Ui::ZPhrControlDialog *ui;
+    Ui::ZCivControlDialog *ui;
     WalletModel* model;
     PrivacyDialog* privacyDialog;
 
