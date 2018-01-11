@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
-// Copyright (c) 2017 The Civitas developers
+// Copyright (c) 2017-2018 The Civitas developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -838,23 +838,7 @@ CAmount CBudgetManager::GetTotalBudget(int nHeight)
         CAmount nSubsidy = 500 * COIN;
         return ((nSubsidy / 100) * 10) * 146;
     }
-
-    //get block value and calculate from that
-    CAmount nSubsidy = 0;
-    if (nHeight > 200 && nHeight <= 250000) {
-        nSubsidy = 7.7 * COIN;
-    } else if (nHeight > 250000 && nHeight <= 518399) {
-        nSubsidy = 5 * COIN;
-    } else if (nHeight > 518399 && nHeight <= 1036798) {
-        nSubsidy = 4 * COIN;
-    } else if (nHeight > 1036798) {
-        nSubsidy = 3 * COIN;
-    } else {
-        nSubsidy = 0 * COIN;
-    }
-
-    // Amount of blocks in a months period of time (using 1 minutes per) = (60*24*30)
-    return ((nSubsidy / 100) * 10) * 1440 * 30;
+	return 0;
 }
 
 void CBudgetManager::NewBlock()
@@ -1230,12 +1214,9 @@ void CBudgetManager::Sync(CNode* pfrom, uint256 nProp, bool fPartial)
 
     /*
         Sync with a client on the network
-
         --
-
         This code checks each of the hash maps for all known budget proposals and finalized budget proposals, then checks them against the
         budget object to see if they're OK. If all checks pass, we'll send it to the peer.
-
     */
 
     int nInvCount = 0;
