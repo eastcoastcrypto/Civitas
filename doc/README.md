@@ -3,7 +3,7 @@ Civitas Core
 
 Setup
 ---------------------
-[Civitas Core](http://civitas.org/wallet) is the original Civitas client and it builds the backbone of the network. However, it downloads and stores the entire history of Civitas transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
+[Civitas Core](http://Civitascoin.com) is the original Civitas client and it builds the backbone of the network. However, it downloads and stores the entire history of Civitas transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
 
 Running
 ---------------------
@@ -28,8 +28,8 @@ Drag Civitas-Qt to your applications folder, and then run Civitas-Qt.
 
 * See the documentation at the [Civitas Wiki](https://en.bitcoin.it/wiki/Main_Page) ***TODO***
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or on the [Civitas Forum](http://forum.civitas.org/).
-* Join one of our Slack groups [Civitas Slack Groups](https://civitas.org/slack-logins/).
+* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php) or on the [Civitas Forum](http://Civitascoin.com/).
+* Join one of our Discord groups [Civitas Discord Groups](https://discord.gg/YcnvMqt).
 
 Building
 ---------------------
@@ -41,7 +41,7 @@ The following are developer notes on how to build Civitas on your native platfor
 
 Development
 ---------------------
-The Civitas repo's [root README](https://github.com/civitasproject/Civitas/blob/master/README.md) contains relevant information on the development process and automated testing.
+The Civitas repo's [root README](https://github.com/eastcoastcrypto/Civitas/blob/master/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Multiwallet Qt Development](multiwallet-qt.md)
@@ -55,8 +55,8 @@ The Civitas repo's [root README](https://github.com/civitasproject/Civitas/blob/
 
 ### Resources
 
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or the [Civitas](http://forum.civitas.org/) forum.
-* Join the [Civitas-Dev](https://civitas-dev.slack.com/) Slack group ([Sign-Up](https://civitas-dev.herokuapp.com/)).
+* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) .
+* Join the [Civitas-Dev] Discord groups [Civitas Discord Groups](https://discord.gg/YcnvMqt).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)
