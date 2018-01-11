@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Civitas
+Comment=Civitas P2P Cryptocurrency
+Comment[fr]=Civitas, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Civitas, eşten eşe kriptografik sanal para birimi
+Exec=civitas-qt %u
+Terminal=false
+Type=Application
+Icon=civitas128
+MimeType=x-scheme-handler/civitas;
+Categories=Office;Finance;

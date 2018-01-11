@@ -1,0 +1,26 @@
+# /etc/conf.d/civitasd: config file for /etc/init.d/civitasd
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/civitas/civitas.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/civitasd"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/civitasd.pid"
+
+# Where to write civitasd data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/civitasd"
+
+# User and group to own civitasd process
+#BITCOIND_USER="civitas"
+#BITCOIND_GROUP="civitas"
+
+# Path to civitasd executable
+#BITCOIND_BIN="/usr/bin/civitasd"
+
+# Nice value to run civitasd under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCOIND_OPTS=""

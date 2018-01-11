@@ -1,0 +1,26 @@
+[Unit]
+Description=Civitas's distributed currency daemon
+After=network.target
+
+[Service]
+User=civitas
+Group=civitas
+
+Type=forking
+PIDFile=/var/lib/civitasd/civitasd.pid
+
+ExecStart=/usr/bin/civitasd -daemon -pid=/var/lib/civitasd/civitasd.pid \
+          -conf=/etc/civitas/civitas.conf -datadir=/var/lib/civitasd
+
+ExecStop=-/usr/bin/civitas-cli -conf=/etc/civitas/civitas.conf \
+         -datadir=/var/lib/civitasd stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
