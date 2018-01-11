@@ -2,6 +2,7 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 // Copyright (c) 2015-2017 The PIVX developers
+// Copyright (c) 2017-2018 The Civitas developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -90,12 +91,12 @@ Object blockToJSON(const CBlock& block, const CBlockIndex* blockindex, bool txDe
 
     result.push_back(Pair("moneysupply",ValueFromAmount(blockindex->nMoneySupply)));
 
-    Object zphrObj;
+    Object zcivObj;
     for (auto denom : libzerocoin::zerocoinDenomList) {
-        zphrObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
+        zcivObj.push_back(Pair(to_string(denom), ValueFromAmount(blockindex->mapZerocoinSupply.at(denom) * (denom*COIN))));
     }
-    zphrObj.emplace_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
-    result.emplace_back(Pair("zCIVsupply", zphrObj));
+    zcivObj.emplace_back(Pair("total", ValueFromAmount(blockindex->GetZerocoinSupply())));
+    result.emplace_back(Pair("zCIVsupply", zcivObj));
 
     return result;
 }
