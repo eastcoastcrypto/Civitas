@@ -1,21 +1,22 @@
-// Copyright (c) 2017 The PIVX developers
+/ Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2017-2018 The Civitas developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zphrcontroldialog.h"
-#include "ui_zphrcontroldialog.h"
+#include "zcivcontroldialog.h"
+#include "ui_zcivcontroldialog.h"
 
 #include "main.h"
 #include "walletmodel.h"
 
 using namespace std;
 
-std::list<std::string> ZPhrControlDialog::listSelectedMints;
-std::list<CZerocoinMint> ZPhrControlDialog::listMints;
+std::list<std::string> ZCivControlDialog::listSelectedMints;
+std::list<CZerocoinMint> ZCivControlDialog::listMints;
 
-ZPhrControlDialog::ZPhrControlDialog(QWidget *parent) :
+ZCivControlDialog::ZCivControlDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ZPhrControlDialog),
+    ui(new Ui::ZCivControlDialog),
     model(0)
 {
     ui->setupUi(this);
@@ -29,19 +30,19 @@ ZPhrControlDialog::ZPhrControlDialog(QWidget *parent) :
     connect(ui->pushButtonAll, SIGNAL(clicked()), this, SLOT(ButtonAllClicked()));
 }
 
-ZPhrControlDialog::~ZPhrControlDialog()
+ZCivControlDialog::~ZCivControlDialog()
 {
     delete ui;
 }
 
-void ZPhrControlDialog::setModel(WalletModel *model)
+void ZCivControlDialog::setModel(WalletModel *model)
 {
     this->model = model;
     updateList();
 }
 
 //Update the tree widget
-void ZPhrControlDialog::updateList()
+void ZCivControlDialog::updateList()
 {
     // need to prevent the slot from being called each time something is changed
     ui->treeWidget->blockSignals(true);
@@ -67,6 +68,7 @@ void ZPhrControlDialog::updateList()
     this->listMints = list;
 
     //populate rows with mint info
+    int nBestHeight = chainActive.Height();
     for(const CZerocoinMint mint : listMints) {
         // assign this mint to the correct denomination in the tree view
         libzerocoin::CoinDenomination denom = mint.GetDenomination();
@@ -81,7 +83,7 @@ void ZPhrControlDialog::updateList()
         itemMint->setText(COLUMN_DENOMINATION, QString::number(mint.GetDenomination()));
         itemMint->setText(COLUMN_PUBCOIN, QString::fromStdString(strPubCoin));
 
-        int nConfirmations = (mint.GetHeight() ? chainActive.Height() - mint.GetHeight() : 0);
+        int nConfirmations = (mint.GetHeight() ? nBestHeight - mint.GetHeight() : 0);
         if (nConfirmations < 0) {
             // Sanity check
             nConfirmations = 0;
@@ -91,9 +93,11 @@ void ZPhrControlDialog::updateList()
 
         // check to make sure there are at least 3 other mints added to the accumulators after this
         int nMintsAdded = 0;
-        if(mint.GetHeight() != 0 && mint.GetHeight() < chainActive.Height() - 2) {
+        if(mint.GetHeight() != 0 && mint.GetHeight() < nBestHeight - 2) {
             CBlockIndex *pindex = chainActive[mint.GetHeight() + 1];
-            while(pindex->nHeight < chainActive.Height() - 30) { // 30 just to make sure that its at least 2 checkpoints from the top block
+            
+            int nHeight2CheckpointsDeep = nBestHeight - (nBestHeight % 10) - 20;
+            while (pindex->nHeight < nHeight2CheckpointsDeep) { // 20 just to make sure that its at least 2 checkpoints from the top block
                 nMintsAdded += count(pindex->vMintDenominationsInBlock.begin(), pindex->vMintDenominationsInBlock.end(), mint.GetDenomination());
                 if(nMintsAdded >= Params().Zerocoin_RequiredAccumulation())
                     break;
@@ -130,7 +134,7 @@ void ZPhrControlDialog::updateList()
 }
 
 // Update the list when a checkbox is clicked
-void ZPhrControlDialog::updateSelection(QTreeWidgetItem* item, int column)
+void ZCivControlDialog::updateSelection(QTreeWidgetItem* item, int column)
 {
     // only want updates from non top level items that are available to spend
     if (item->parent() && column == COLUMN_CHECKBOX && !item->isDisabled()){
@@ -153,7 +157,7 @@ void ZPhrControlDialog::updateSelection(QTreeWidgetItem* item, int column)
 }
 
 // Update the Quantity and Amount display
-void ZPhrControlDialog::updateLabels()
+void ZCivControlDialog::updateLabels()
 {
     int64_t nAmount = 0;
     for (const CZerocoinMint mint : listMints) {
@@ -163,14 +167,14 @@ void ZPhrControlDialog::updateLabels()
     }
 
     //update this dialog's labels
-    ui->labelZPhr_int->setText(QString::number(nAmount));
+    ui->labelZCiv_int->setText(QString::number(nAmount));
     ui->labelQuantity_int->setText(QString::number(listSelectedMints.size()));
 
     //update PrivacyDialog labels
-    privacyDialog->setZPhrControlLabels(nAmount, listSelectedMints.size());
+    privacyDialog->setZCivControlLabels(nAmount, listSelectedMints.size());
 }
 
-std::vector<CZerocoinMint> ZPhrControlDialog::GetSelectedMints()
+std::vector<CZerocoinMint> ZCivControlDialog::GetSelectedMints()
 {
     std::vector<CZerocoinMint> listReturn;
     for (const CZerocoinMint mint : listMints) {
@@ -183,7 +187,7 @@ std::vector<CZerocoinMint> ZPhrControlDialog::GetSelectedMints()
 }
 
 // select or deselect all of the mints
-void ZPhrControlDialog::ButtonAllClicked()
+void ZCivControlDialog::ButtonAllClicked()
 {
     ui->treeWidget->blockSignals(true);
     Qt::CheckState state = Qt::Checked;
