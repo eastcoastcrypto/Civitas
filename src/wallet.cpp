@@ -4168,7 +4168,7 @@ bool CWallet::CreateZerocoinSpendTransaction(CAmount nValue, int nSecurityLevel,
     }
 
     if (nValue < 1) {
-        receipt.SetStatus("Value is below the the smallest available denomination (= 1) of zPhr", nStatus);
+        receipt.SetStatus("Value is below the the smallest available denomination (= 1) of zCiv", nStatus);
         return false;
     }
 
