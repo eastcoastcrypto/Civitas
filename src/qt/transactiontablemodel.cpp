@@ -85,7 +85,6 @@ public:
 
     /* Update our model of the wallet incrementally, to synchronize our model of the wallet
        with that of the core.
-
        Call with transaction that was added, removed or changed.
      */
     void updateWallet(const uint256& hash, int status, bool showTransaction)
@@ -356,15 +355,15 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
     case TransactionRecord::Obfuscated:
         return tr("Obfuscated");
     case TransactionRecord::ZerocoinMint:
-        return tr("Converted Phr to zPhr");
+        return tr("Converted Civ to zCiv");
     case TransactionRecord::ZerocoinSpend:
-        return tr("Spent zPhr");
+        return tr("Spent zCiv");
     case TransactionRecord::RecvFromZerocoinSpend:
-        return tr("Received Phr from zPhr");
-    case TransactionRecord::ZerocoinSpend_Change_zPhr:
-        return tr("Minted Change as zPhr from zPhr Spend");
+        return tr("Received Civ from zCiv");
+    case TransactionRecord::ZerocoinSpend_Change_zCiv:
+        return tr("Minted Change as zCiv from zCiv Spend");
     case TransactionRecord::ZerocoinSpend_FromMe:
-        return tr("Converted zPhr to Phr");
+        return tr("Converted zCiv to Civ");
 
     default:
         return QString();
@@ -418,8 +417,8 @@ QString TransactionTableModel::formatTxToAddress(const TransactionRecord* wtx, b
     case TransactionRecord::SendToOther:
         return QString::fromStdString(wtx->address) + watchAddress;
     case TransactionRecord::ZerocoinMint:
-    case TransactionRecord::ZerocoinSpend_Change_zPhr:
-        return tr("zPhr Accumulator");
+    case TransactionRecord::ZerocoinSpend_Change_zCiv:
+        return tr("zCiv Accumulator");
     case TransactionRecord::SendToSelf:
     default:
         return tr("(n/a)") + watchAddress;
