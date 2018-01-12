@@ -76,6 +76,8 @@
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
  */
 
+#include <stddef.h>
+
 #ifndef MAC_OSX
 #pragma GCC diagnostic ignored "-fpermissive"
 #endif
@@ -84,10 +86,10 @@
 #pragma warning (disable: 4146)
 #endif
 
-#undef SPH_XCAT
-#define SPH_XCAT(a, b)     SPH_XCAT_(a, b)
 #undef SPH_XCAT_
 #define SPH_XCAT_(a, b)    a ## b
+#undef SPH_XCAT
+#define SPH_XCAT(a, b)     SPH_XCAT_(a, b)
 
 #undef SPH_BLEN
 #undef SPH_WLEN
