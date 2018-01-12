@@ -1559,7 +1559,7 @@ qt/qt_libbitcoinqt_a-privacydialog.o: qt/privacydialog.cpp \
  /usr/share/mingw-w64/include/getopt.h libzerocoin/Accumulator.h wallet.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QStackedWidget \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qstackedwidget.h \
- coincontrol.h qt/zphrcontroldialog.h primitives/zerocoin.h spork.h \
+ coincontrol.h qt/zcivcontroldialog.h primitives/zerocoin.h spork.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtGui/QClipboard \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtGui/qclipboard.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/QSettings \
@@ -5385,7 +5385,7 @@ wallet.h:
 
 coincontrol.h:
 
-qt/zphrcontroldialog.h:
+qt/zcivcontroldialog.h:
 
 primitives/zerocoin.h:
 
