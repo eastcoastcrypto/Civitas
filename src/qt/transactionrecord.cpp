@@ -84,7 +84,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
                     continue;
 
                 TransactionRecord sub(hash, nTime);
-                sub.type = TransactionRecord::ZerocoinSpend_Change_zPhr;
+                sub.type = TransactionRecord::ZerocoinSpend_Change_zCiv;
                 sub.address = mapValue["zerocoinmint"];
                 sub.debit = -txout.nValue;
                 if (!fFeeAssigned) {
