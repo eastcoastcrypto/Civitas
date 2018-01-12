@@ -1,5 +1,5 @@
-qt/qt_libbitcoinqt_a-moc_zphrcontroldialog.o: \
- qt/moc_zphrcontroldialog.cpp qt/zphrcontroldialog.h \
+qt/qt_libbitcoinqt_a-moc_zcivcontroldialog.o: \
+ qt/moc_zcivcontroldialog.cpp qt/zcivcontroldialog.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QDialog \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qdialog.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qwidget.h \
@@ -720,7 +720,7 @@ qt/qt_libbitcoinqt_a-moc_zphrcontroldialog.o: \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/QVariant \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/qvariant.h
 
-qt/zphrcontroldialog.h:
+qt/zcivcontroldialog.h:
 
 /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QDialog:
 
