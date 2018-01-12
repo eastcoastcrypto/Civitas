@@ -54,8 +54,10 @@ typedef sph_s32 s32;
 #define T32     SPH_T32
 #define ROL32   SPH_ROTL32
 
-#define XCAT(x, y)    XCAT_(x, y)
+#undef XCAT_
 #define XCAT_(x, y)   x ## y
+#undef XCAT
+#define XCAT(x, y)    XCAT_(x, y)
 
 /*
  * The powers of 41 modulo 257. We use exponents from 0 to 255, inclusive.
