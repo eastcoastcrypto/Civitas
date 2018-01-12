@@ -1,36 +1,55 @@
-Civitas Core integration/staging repository
-=====================================
+### Civitas is a fork of [PIVX](https://github.com/PIVX-Project/PIVX) that forked [Dash](https://github.com/dashpay/dash) that forked [Bitcoin](https://github.com/bitcoin/bitcoinp)
+
+
+# Civitas Core integration/staging repository
+
 
 Civitas is a cutting edge cryptocurrency, with many features not available in most other cryptocurrencies.
 - Anonymized transactions using zerocoin technology.
-- Fast transactions featuring guaranteed zero confirmation transactions, we call it _SwiftTX_.
-- Masternode technology used to secure the network and provide the above features, each Masternode is secured
-  with collateral of 10K CIV
+- Fast transactions featuring guaranteed zero confirmation transactions, PIVX named it _SwiftX_.
+- Decentralized blockchain voting providing for consensus based advancement of the current Masternode
+  technology used to secure the network and provide the above features, each Masternode is secured
+  with a collateral of 10K CIV.
 
-17.6M civitas was produced for swapping. 500k were mined 1-200 blocks to bring that amount to 18.1M CIV, the amount needed for the swap.
+More information at [CivitasCoin.com](http://www.civitascoin.com) Visit our ANN thread at [BitcoinTalk](http://www.bitcointalk.org/index.php)
 
-_Unfortunately, the code was not properly forked on GitHub from the PIVX repository. This serves the same purpose. We forked from [PIVX-Project/PIVX](https://github.com/PIVX-Project/PIVX/)._
 
-## BCT Thread ##
-
-https://bitcointalk.org/index.php?topic=2307909.0
-
-Rebrand from KryptKoin [KTK] to Civitas [CIV] 
-
-## Coin Specs ##
+### Coin Specs
 <table>
 <tr><td>Algo</td><td>Quark</td></tr>
 <tr><td>Block Time</td><td>60 Seconds</td></tr>
 <tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
+<tr><td>Max Coin Supply (PoW Phase)</td><td>3,000,000 CIV</td></tr>
 <tr><td>Max Coin Supply (PoS Phase)</td><td>Infinite</td></tr>
+<tr><td>Premine</td><td>400,000 CIV</td></tr>
 </table>
 
-## PoS Rewards Breakdown ##
+
+### Reward Distribution
 
 <table>
-<th>Block Height</th><th>Reward</th><th>Masternodes</th><th>Stakers</th><th>Budget</th>
-<tr><td><250000</td><td>7.7 CIV</td><td>4.2 CIV</td><td>2.8 CIV</td><td>10% (0.7 CIV)</td></tr>
-<tr><td>250000-518399</td><td>5 CIV</td><td>2.7 CIV</td><td>1.8 CIV</td><td>10% (0.5 CIV)</td></tr>
-<tr><td>518399-1036798</td><td>4 CIV</td><td>2.16 CIV</td><td>1.44 CIV</td><td>10% (0.4 CIV)</td></tr>
-<tr><td>1036798>Infinite</td><td>3 CIV</td><td>1.62 CIV</td><td>1.08 CIV</td><td>10% (0.3 CIV)</td></tr>
+<th colspan=4>PoW Phase</th>
+<tr><th>Block Height</th><th>Reward Amount</th><th>Notes</th><th>Duration (Days)</th></tr>
+<tr><td>1</td><td>400,000 CIV</td><td>Initial Premine</td><td>0 Days</td></tr>
+<tr><td>2-259200</td><td>10 CIV</td><td rowspan=1>Open Mining</td><td rowspan=1> Approx 180 Days</td></tr>
+<tr><th colspan=4>PoS Phase</th></tr>
+<tr><th>Block Height</th><th colspan=3>Reward Amount</th></tr>
+<tr><td>259201-Infinite</td><td colspan=2>Masternodes: 65%</td><td>Stakers: 35%</td></tr>
+</table>
+
+### PoW Rewards Breakdown
+
+<table>
+<th>Block Height</th><th>Reward</th><th>Masternodes</th><th>Miner</th>
+<tr><td>2-259200</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
+</table>
+
+### PoS Rewards Breakdown
+
+<table>
+<th>Phase</th><th>Block Height</th><th>Reward</th><th>Masternodes</th><th>Stakers</th>
+<tr><td>Phase 1</td><td>259201-518400</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
+<tr><td>Phase 2</td><td>518401-777600</td><td>5 CIV</td><td>65% (3.25 CIV)</td><td>35% (1.75 CIV)</td></tr>
+<tr><td>Phase 3</td><td>777601-1036801</td><td>2 CIV</td><td>65% (1.3 CIV)</td><td>35% (0.7 CIV)</td></tr>
+<tr><td>Phase 4</td><td>1036802-Infinite</td><td>1 CIV</td><td>65% (0.65 CIV)</td><td>35% (0.35 CIV)</td></tr>
 </table>
