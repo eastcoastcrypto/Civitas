@@ -109,7 +109,6 @@ BITCOIN_CORE_H = \
   db.h \
   eccryptoverify.h \
   ecwrapper.h \
-  prevector.h \
   hash.h \
   init.h \
   kernel.h \
@@ -279,7 +278,6 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/scrypt.cpp \
   crypto/ripemd160.cpp \
   crypto/sph_sha2big.c \
-  crypto/sph_md_helper.c \
   crypto/aes_helper.c \
   crypto/blake.c \
   crypto/bmw.c \
