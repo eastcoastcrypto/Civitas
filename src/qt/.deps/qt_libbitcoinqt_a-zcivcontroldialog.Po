@@ -1,5 +1,5 @@
-qt/qt_libbitcoinqt_a-zphrcontroldialog.o: qt/zphrcontroldialog.cpp \
- qt/zphrcontroldialog.h \
+qt/qt_libbitcoinqt_a-zcivcontroldialog.o: qt/zcivcontroldialog.cpp \
+ qt/zcivcontroldialog.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QDialog \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qdialog.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qwidget.h \
@@ -719,7 +719,7 @@ qt/qt_libbitcoinqt_a-zphrcontroldialog.o: qt/zphrcontroldialog.cpp \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/qbasictimer.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/QVariant \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/qvariant.h \
- qt/forms/ui_zphrcontroldialog.h \
+ qt/forms/ui_zcivcontroldialog.h \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/QVariant \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QAction \
  /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/qaction.h \
@@ -1521,7 +1521,7 @@ qt/qt_libbitcoinqt_a-zphrcontroldialog.o: qt/zphrcontroldialog.cpp \
  /usr/share/mingw-w64/include/sec_api/io_s.h \
  /usr/share/mingw-w64/include/getopt.h libzerocoin/Accumulator.h wallet.h
 
-qt/zphrcontroldialog.h:
+qt/zcivcontroldialog.h:
 
 /root/Civitas/depends/i686-w64-mingw32/share/../include/QtWidgets/QDialog:
 
@@ -3041,7 +3041,7 @@ qt/guiutil.h:
 
 /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/qvariant.h:
 
-qt/forms/ui_zphrcontroldialog.h:
+qt/forms/ui_zcivcontroldialog.h:
 
 /root/Civitas/depends/i686-w64-mingw32/share/../include/QtCore/QVariant:
 
