@@ -231,6 +231,7 @@ am_crypto_libbitcoin_crypto_a_OBJECTS =  \
 	crypto/crypto_libbitcoin_crypto_a-hmac_sha512.$(OBJEXT) \
 	crypto/crypto_libbitcoin_crypto_a-scrypt.$(OBJEXT) \
 	crypto/crypto_libbitcoin_crypto_a-ripemd160.$(OBJEXT) \
+	crypto/crypto_libbitcoin_crypto_a-sph_md_helper.$(OBJEXT) \
 	crypto/crypto_libbitcoin_crypto_a-sph_sha2big.$(OBJEXT) \
 	crypto/crypto_libbitcoin_crypto_a-aes_helper.$(OBJEXT) \
 	crypto/crypto_libbitcoin_crypto_a-blake.$(OBJEXT) \
@@ -1776,6 +1777,7 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/hmac_sha512.cpp \
   crypto/scrypt.cpp \
   crypto/ripemd160.cpp \
+  crypto/sph_md_helper.c \
   crypto/sph_sha2big.c \
   crypto/aes_helper.c \
   crypto/blake.c \
@@ -2451,6 +2453,8 @@ crypto/crypto_libbitcoin_crypto_a-hmac_sha512.$(OBJEXT):  \
 crypto/crypto_libbitcoin_crypto_a-scrypt.$(OBJEXT):  \
 	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
 crypto/crypto_libbitcoin_crypto_a-ripemd160.$(OBJEXT):  \
+	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
+crypto/crypto_libbitcoin_crypto_a-sph_md_helper.$(OBJEXT):  \
 	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
 crypto/crypto_libbitcoin_crypto_a-sph_sha2big.$(OBJEXT):  \
 	crypto/$(am__dirstamp) crypto/$(DEPDIR)/$(am__dirstamp)
@@ -3271,6 +3275,7 @@ include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-shabal.Po
 include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-shavite.Po
 include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-simd.Po
 include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-skein.Po
+include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Po
 include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_sha2big.Po
 include crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-whirlpool.Po
 include crypto/$(DEPDIR)/libbitcoinconsensus_la-hmac_sha512.Plo
@@ -3493,6 +3498,21 @@ include zmq/$(DEPDIR)/libbitcoin_zmq_a-zmqpublishnotifier.Po
 #	$(AM_V_CC)source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(AM_V_CC_no)$(LTCOMPILE) -c -o $@ $<
+
+crypto/crypto_libbitcoin_crypto_a-sph_md_helper.o: crypto/sph_md_helper.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(crypto_libbitcoin_crypto_a_CFLAGS) $(CFLAGS) -MT crypto/crypto_libbitcoin_crypto_a-sph_md_helper.o -MD -MP -MF crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Tpo -c -o crypto/crypto_libbitcoin_crypto_a-sph_md_helper.o `test -f 'crypto/sph_md_helper.c' || echo '$(srcdir)/'`crypto/sph_md_helper.c
+	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Tpo crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Po
+#	$(AM_V_CC)source='crypto/sph_md_helper.c' object='crypto/crypto_libbitcoin_crypto_a-sph_md_helper.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(crypto_libbitcoin_crypto_a_CFLAGS) $(CFLAGS) -c -o crypto/crypto_libbitcoin_crypto_a-sph_md_helper.o `test -f 'crypto/sph_md_helper.c' || echo '$(srcdir)/'`crypto/sph_md_helper.c
+
+crypto/crypto_libbitcoin_crypto_a-sph_md_helper.obj: crypto/sph_md_helper.c
+	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(crypto_libbitcoin_crypto_a_CFLAGS) $(CFLAGS) -MT crypto/crypto_libbitcoin_crypto_a-sph_md_helper.obj -MD -MP -MF crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Tpo -c -o crypto/crypto_libbitcoin_crypto_a-sph_md_helper.obj `if test -f 'crypto/sph_md_helper.c'; then $(CYGPATH_W) 'crypto/sph_md_helper.c'; else $(CYGPATH_W) '$(srcdir)/crypto/sph_md_helper.c'; fi`
+	$(AM_V_at)$(am__mv) crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Tpo crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_md_helper.Po
+#	$(AM_V_CC)source='crypto/sph_md_helper.c' object='crypto/crypto_libbitcoin_crypto_a-sph_md_helper.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(AM_V_CC_no)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(crypto_libbitcoin_crypto_a_CFLAGS) $(CFLAGS) -c -o crypto/crypto_libbitcoin_crypto_a-sph_md_helper.obj `if test -f 'crypto/sph_md_helper.c'; then $(CYGPATH_W) 'crypto/sph_md_helper.c'; else $(CYGPATH_W) '$(srcdir)/crypto/sph_md_helper.c'; fi`
+
 
 crypto/crypto_libbitcoin_crypto_a-sph_sha2big.o: crypto/sph_sha2big.c
 	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(crypto_libbitcoin_crypto_a_CPPFLAGS) $(CPPFLAGS) $(crypto_libbitcoin_crypto_a_CFLAGS) $(CFLAGS) -MT crypto/crypto_libbitcoin_crypto_a-sph_sha2big.o -MD -MP -MF crypto/$(DEPDIR)/crypto_libbitcoin_crypto_a-sph_sha2big.Tpo -c -o crypto/crypto_libbitcoin_crypto_a-sph_sha2big.o `test -f 'crypto/sph_sha2big.c' || echo '$(srcdir)/'`crypto/sph_sha2big.c
