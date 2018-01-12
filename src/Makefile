@@ -340,7 +340,7 @@ am__libbitcoin_util_a_SOURCES_DIST = allocators.cpp compat/strnlen.cpp \
 	primitives/block.h primitives/transaction.h \
 	primitives/zerocoin.h core_io.h crypter.h \
 	denomination_functions.h obfuscation.h obfuscation-relay.h \
-	db.h eccryptoverify.h ecwrapper.h hash.h init.h kernel.h \
+	db.h eccryptoverify.h ecwrapper.h prevector.h hash.h init.h kernel.h \
 	swifttx.h key.h keystore.h leveldbwrapper.h limitedmap.h \
 	main.h masternode.h masternode-payments.h masternode-budget.h \
 	masternode-sync.h masternodeman.h masternodeconfig.h \
@@ -1614,6 +1614,7 @@ BITCOIN_CORE_H = \
   db.h \
   eccryptoverify.h \
   ecwrapper.h \
+  prevector.h \
   hash.h \
   init.h \
   kernel.h \
