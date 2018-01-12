@@ -2213,10 +2213,8 @@ static const sph_u32 T3dn[] = {
 		memcpy((sc)->state.narrow, H, sizeof H); \
 	} while (0)
 
-#undef XCAT_
-#define XCAT_(x, y)   x ## y
-#undef XCAT
 #define XCAT(x, y)    XCAT_(x, y)
+#define XCAT_(x, y)   x ## y
 
 #define RSTT(d0, d1, a, b0, b1, b2, b3, b4, b5, b6, b7)   do { \
 		t[d0] = T0up[B32_0(a[b0])] \

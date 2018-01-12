@@ -370,11 +370,8 @@ extern "C"{
 #define M3_18_0   0
 #define M3_18_1   1
 
-#undef XCAT_
-#define XCAT_(x, y)    x ## y
-#undef XCAT
 #define XCAT(x, y)     XCAT_(x, y)
-
+#define XCAT_(x, y)    x ## y
 
 #if 0
 /* obsolete */

@@ -96,10 +96,8 @@ static const sph_u64 IV512[] = {
 
 #endif
 
-#undef XCAT_
-#define XCAT_(x, y)   x ## y
-#undef XCAT
 #define XCAT(x, y)    XCAT_(x, y)
+#define XCAT_(x, y)   x ## y
 
 #define LPAR   (
 
