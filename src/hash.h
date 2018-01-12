@@ -11,7 +11,6 @@
 
 #include "crypto/ripemd160.h"
 #include "crypto/sha256.h"
-//#include "prevector.h"
 #include "serialize.h"
 #include "uint256.h"
 #include "version.h"
