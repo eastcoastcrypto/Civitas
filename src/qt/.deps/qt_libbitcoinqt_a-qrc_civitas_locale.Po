@@ -1,1 +1,0 @@
-qt/qt_libbitcoinqt_a-qrc_civitas_locale.o: qt/qrc_civitas_locale.cpp
