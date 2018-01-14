@@ -1,5 +1,5 @@
 ---
-name: "civitas-win-1.1"
+name: "civitas-win-1.2"
 enable_cache: true
 suites:
 - "trusty"
