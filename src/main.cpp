@@ -2883,7 +2883,7 @@ bool RecalculateCIVSupply(int nHeightStart)
     CBlockIndex* pindex = chainActive[nHeightStart];
     CAmount nSupplyPrev = pindex->pprev->nMoneySupply;
     if (nHeightStart == Params().Zerocoin_StartHeight())
-        nSupplyPrev = CAmount(5449796547496199);
+        nSupplyPrev = CAmount(42895359604627);
 
     while (true) {
         if (pindex->nHeight % 1000 == 0)

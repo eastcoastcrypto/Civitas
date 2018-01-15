@@ -182,19 +182,13 @@ bool CalculateAccumulatorCheckpoint(int nHeight, uint256& nCheckpoint)
 
     //Accumulate all coins over the last ten blocks that havent been accumulated (height - 20 through height - 11)
     int nTotalMintsFound = 0;
-    CBlockIndex *pindex = chainActive[nHeight == Params().Zerocoin_StartHeight() ? (nHeight - 20) : 1];
+    CBlockIndex *pindex = chainActive[nHeight == Params().Zerocoin_StartHeight() ? 1 : (nHeight - 20)];
 
     while (pindex->nHeight < nHeight - 10) {
         // checking whether we should stop this process due to a shutdown request
         if (ShutdownRequested()) {
             return false;
         }
-
-        //make sure this block is eligible for accumulation
-        // if (pindex->nHeight < Params().Zerocoin_StartHeight()) {
-        //     pindex = chainActive[pindex->nHeight + 1];
-        //     continue;
-        // }
 
         //grab mints from this block
         CBlock block;
