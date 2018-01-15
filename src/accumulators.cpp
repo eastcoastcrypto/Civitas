@@ -182,24 +182,7 @@ bool CalculateAccumulatorCheckpoint(int nHeight, uint256& nCheckpoint)
 
     //Accumulate all coins over the last ten blocks that havent been accumulated (height - 20 through height - 11)
     int nTotalMintsFound = 0;
-    CBlockIndex *pindex = chainActive[nHeight - 20];
-
-    //On a specific block, a recalculation of the accumulators will be forced
-    if (nHeight == Params().Zerocoin_Block_RecalculateAccumulators()) {
-        pindex = chainActive[Params().Zerocoin_Block_LastGoodCheckpoint() - 10];
-        mapAccumulators.Reset();
-        if (!mapAccumulators.Load(chainActive[Params().Zerocoin_Block_LastGoodCheckpoint()]->nAccumulatorCheckpoint)) {
-            LogPrintf("%s: failed to reset to previous checkpoint when recalculating accumulators\n", __func__);
-            return false;
-        }
-        LogPrintf("*** %s recalculating checkpoint\n", __func__);
-
-        // Erase the checkpoints from the period of time that bad mints were being made
-        if (!EraseCheckpoints(Params().Zerocoin_Block_LastGoodCheckpoint() + 1, nHeight)) {
-            LogPrintf("%s : failed to erase Checkpoints while recalculating checkpoints\n", __func__);
-            return false;
-        }
-    }
+    CBlockIndex *pindex = chainActive[nHeight == Params().Zerocoin_StartHeight() ? (nHeight - 20) : 1];
 
     while (pindex->nHeight < nHeight - 10) {
         // checking whether we should stop this process due to a shutdown request
@@ -208,10 +191,10 @@ bool CalculateAccumulatorCheckpoint(int nHeight, uint256& nCheckpoint)
         }
 
         //make sure this block is eligible for accumulation
-        if (pindex->nHeight < Params().Zerocoin_StartHeight()) {
-            pindex = chainActive[pindex->nHeight + 1];
-            continue;
-        }
+        // if (pindex->nHeight < Params().Zerocoin_StartHeight()) {
+        //     pindex = chainActive[pindex->nHeight + 1];
+        //     continue;
+        // }
 
         //grab mints from this block
         CBlock block;
