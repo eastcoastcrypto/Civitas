@@ -1,5 +1,5 @@
 ---
-name: "civitas-osx-1.1"
+name: "civitas-osx-1.2"
 enable_cache: true
 suites:
 - "trusty"

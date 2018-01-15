@@ -1,5 +1,5 @@
 ---
-name: "civitas-aarch64-1.1"
+name: "civitas-aarch64-1.2"
 enable_cache: true
 suites:
 - "trusty"
