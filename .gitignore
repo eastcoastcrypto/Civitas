@@ -83,6 +83,7 @@ src/qt/test/moc*.cpp
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
+!depends/Makefile
 civitas-qt
 civitas-Qt.app
 
