@@ -126,3 +126,5 @@ qa/pull-tester/test.*/*
 .idea
 CMakeLists.txt
 cmake-build-debug
+config.log
+config.status
