@@ -76,6 +76,8 @@
  * @author   Thomas Pornin <thomas.pornin@cryptolog.com>
  */
 
+#ifdef HASH
+
 #include <stddef.h>
 
 #ifndef MAC_OSX
@@ -356,3 +358,5 @@ SPH_XCAT(HASH, _close)(void *cc, void *dst, unsigned rnum)
 {
 	SPH_XCAT(HASH, _addbits_and_close)(cc, 0, 0, dst, rnum);
 }
+
+#endif
