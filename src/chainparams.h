@@ -116,6 +116,7 @@ public:
     int Zerocoin_Block_FirstFraudulent() const { return nBlockFirstFraudulent; }
     int Zerocoin_Block_LastGoodCheckpoint() const { return nBlockLastGoodCheckpoint; }
     int Zerocoin_StartTime() const { return nZerocoinStartTime; }
+    int Zerocoin_AccumulatorStartHeight() const { return nAccumulatorStartHeight; }
 
 protected:
     CChainParams() {}
@@ -172,6 +173,7 @@ protected:
     int nBlockFirstFraudulent;
     int nBlockLastGoodCheckpoint;
     int nZerocoinStartTime;
+    int nAccumulatorStartHeight;
 };
 
 /**

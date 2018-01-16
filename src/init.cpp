@@ -1354,12 +1354,9 @@ bool AppInit2(boost::thread_group& threadGroup)
                     break;
                 }
 
-                // Populate list of invalid/fraudulent outpoints that are banned from the chain
-                PopulateInvalidOutPointMap();
-
                 // Recalculate money supply for blocks that are impacted by accounting issue after zerocoin activation
                 if (GetBoolArg("-reindexmoneysupply", false)) {
-                    if (chainActive.Height() > Params().Zerocoin_StartHeight()) {
+                    if (chainActive.Height() >= Params().Zerocoin_AccumulatorStartHeight()) {
                         RecalculateZCIVMinted();
                         RecalculateZCIVSpent();
                     }
@@ -1368,7 +1365,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
                 // Force recalculation of accumulators.
                 if (GetBoolArg("-reindexaccumulators", false)) {
-                    CBlockIndex* pindex = chainActive[Params().Zerocoin_StartHeight()];
+                    CBlockIndex* pindex = chainActive[Params().Zerocoin_AccumulatorStartHeight()];
                     while (pindex->nHeight < chainActive.Height()) {
                         if (!count(listAccCheckpointsNoDB.begin(), listAccCheckpointsNoDB.end(), pindex->nAccumulatorCheckpoint))
                             listAccCheckpointsNoDB.emplace_back(pindex->nAccumulatorCheckpoint);
