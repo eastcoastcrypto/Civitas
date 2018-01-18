@@ -31,7 +31,7 @@ More information at [CivitasCoin.com](http://www.civitascoin.com) Visit our ANN 
 <th colspan=4>PoW Phase</th>
 <tr><th>Block Height</th><th>Reward Amount</th><th>Notes</th><th>Duration (Days)</th></tr>
 <tr><td>1</td><td>400,000 CIV</td><td>Initial Premine</td><td>0 Days</td></tr>
-<tr><td>2-259200</td><td>10 CIV</td><td rowspan=1>Open Mining</td><td rowspan=1> Approx 180 Days</td></tr>
+<tr><td>2-3029</td><td>10 CIV</td><td rowspan=1>Open Mining</td><td rowspan=1> Approx 180 Days</td></tr>
 <tr><th colspan=4>PoS Phase</th></tr>
 <tr><th>Block Height</th><th colspan=3>Reward Amount</th></tr>
 <tr><td>259201-Infinite</td><td colspan=2>Masternodes: 65%</td><td>Stakers: 35%</td></tr>
@@ -41,14 +41,14 @@ More information at [CivitasCoin.com](http://www.civitascoin.com) Visit our ANN 
 
 <table>
 <th>Block Height</th><th>Reward</th><th>Masternodes</th><th>Miner</th>
-<tr><td>2-259200</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
+<tr><td>2-3029</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
 </table>
 
 ### PoS Rewards Breakdown
 
 <table>
 <th>Phase</th><th>Block Height</th><th>Reward</th><th>Masternodes</th><th>Stakers</th>
-<tr><td>Phase 1</td><td>259201-518400</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
+<tr><td>Phase 1</td><td>3030-518400</td><td>10 CIV</td><td>65% (6.5 CIV)</td><td>35% (3.5 CIV)</td></tr>
 <tr><td>Phase 2</td><td>518401-777600</td><td>5 CIV</td><td>65% (3.25 CIV)</td><td>35% (1.75 CIV)</td></tr>
 <tr><td>Phase 3</td><td>777601-1036801</td><td>2 CIV</td><td>65% (1.3 CIV)</td><td>35% (0.7 CIV)</td></tr>
 <tr><td>Phase 4</td><td>1036802-Infinite</td><td>1 CIV</td><td>65% (0.65 CIV)</td><td>35% (0.35 CIV)</td></tr>
