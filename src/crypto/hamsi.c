@@ -33,7 +33,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "sph_hamsi.h"
+#include "crypto/sph_hamsi.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -112,7 +112,7 @@ extern "C"{
 #pragma warning (disable: 4146)
 #endif
 
-#include "hamsi_helper.c"
+#include "crypto/hamsi_helper.c"
 
 static const sph_u32 IV224[] = {
 	SPH_C32(0xc3967a67), SPH_C32(0xc3bc6c20), SPH_C32(0x4bc3bcc3),

@@ -33,7 +33,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "sph_shabal.h"
+#include "crypto/sph_shabal.h"
 
 #ifdef __cplusplus
 extern "C"{
