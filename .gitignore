@@ -12,6 +12,8 @@ src/civitas-cli
 src/civitas-tx
 src/test/test_civitas
 src/qt/test/test_civitas-qt
+src/test/.deps
+*.Po
 
 # autoreconf
 Makefile.in
@@ -81,7 +83,7 @@ src/qt/test/moc*.cpp
 
 # Compilation and Qt preprocessor part
 *.qm
-Makefile
+/Makefile
 civitas-qt
 civitas-Qt.app
 
@@ -126,5 +128,5 @@ qa/pull-tester/test.*/*
 .idea
 CMakeLists.txt
 cmake-build-debug
-config.log
-config.status
+
+.Po
