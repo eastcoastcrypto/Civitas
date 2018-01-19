@@ -49,7 +49,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "crypto/sph_whirlpool.h"
+#include "sph_whirlpool.h"
 
 #ifdef __cplusplus
 extern "C"{
@@ -3441,19 +3441,19 @@ ROUND_FUN(whirlpool1, old1)
 
 #define RFUN   whirlpool_round
 #define HASH   whirlpool
-#include "crypto/md_helper.c"
+#include "md_helper.c"
 #undef RFUN
 #undef HASH
 
 #define RFUN   whirlpool0_round
 #define HASH   whirlpool0
-#include "crypto/md_helper.c"
+#include "md_helper.c"
 #undef RFUN
 #undef HASH
 
 #define RFUN   whirlpool1_round
 #define HASH   whirlpool1
-#include "crypto/md_helper.c"
+#include "md_helper.c"
 #undef RFUN
 #undef HASH
 

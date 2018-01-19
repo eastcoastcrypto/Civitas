@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "crypto/sph_fugue.h"
+#include "sph_fugue.h"
 
 #ifdef __cplusplus
 extern "C"{

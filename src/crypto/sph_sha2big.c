@@ -41,7 +41,7 @@
 extern "C" {
 #endif
 
-#include "crypto/sph_sha2.h"
+#include "sph_sha2.h"
 
 #if SPH_64
 
@@ -209,7 +209,7 @@ sph_sha512_init(void *cc)
 #define RFUN   sha3_round
 #define HASH   sha384
 #define BE64   1
-#include "crypto/sph_md_helper.c"
+#include "sph_md_helper.c"
 
 /* see sph_sha3.h */
 void
