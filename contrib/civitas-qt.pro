@@ -133,8 +133,10 @@ HEADERS += src/activemasternode.h \
            src/compat/sanity.h \
            src/config/civitas-config.h \
            src/crypto/common.h \
+           src/crypto/haval_helper.c \
            src/crypto/hmac_sha256.h \
            src/crypto/hmac_sha512.h \
+           src/crypto/md_helper.c \
            src/crypto/rfc6979_hmac_sha256.h \
            src/crypto/ripemd160.h \
            src/crypto/sha1.h \
@@ -148,6 +150,7 @@ HEADERS += src/activemasternode.h \
            src/crypto/sph_jh.h \
            src/crypto/sph_keccak.h \
            src/crypto/sph_luffa.h \
+           src/crypto/sph_md_helper.c \
            src/crypto/sph_shavite.h \
            src/crypto/sph_simd.h \
            src/crypto/sph_skein.h \
