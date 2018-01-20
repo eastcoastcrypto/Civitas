@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/civitasproject/civitas-detached-sigs.git"
+- "url": "https://github.com/eastcoastcrypto/civitas-detached-sigs.git"
   "dir": "signature"
 files:
 - "civitas-osx-unsigned.tar.gz"
