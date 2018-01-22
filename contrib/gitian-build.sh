@@ -252,7 +252,6 @@ then
 fi
 
 # Set up build
-echo `pwd`
 pushd ./civitas
 git fetch
 git checkout ${COMMIT}
