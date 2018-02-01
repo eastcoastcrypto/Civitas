@@ -124,12 +124,11 @@ public:
         nModifierUpdateBlock = 999999999;
         nZerocoinStartHeight = 3030;
         nAccumulatorStartHeight = 1;
-        nZerocoinStartTime = 1516081473; // 2018-01-14T16:04:58
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
         nBlockRecalculateAccumulators = ~1; //Trigger a recalculation of accumulators
         nBlockFirstFraudulent = ~1; //First block that bad serials emerged
         nBlockLastGoodCheckpoint = ~1; //Last valid accumulator checkpoint
-        
+
         /**
          * Build the genesis block. Note that the output of the genesis coinbase cannot
          * be spent as it did not originally exist in the database.
@@ -155,7 +154,6 @@ public:
         genesis.nBits = 0x1e0ffff0;
         genesis.nNonce = 252106;
 
-		
         hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == uint256("0x00000186b7f1ac681548e1be4b72e1f5e489a2c3a7d0650eed27ec7c286b6e90"));
         assert(genesis.hashMerkleRoot == uint256("0xb8fcd176f24525bbc1be9bd59a9008f372a39c9f0c8d41c9598d27c6b37077f6"));
@@ -228,24 +226,25 @@ public:
         nToCheckBlockUpgradeMajority = 100;
         nMinerThreads = 0;
         nTargetTimespan = 1 * 60; // Civitas: 1 day
-        nTargetSpacing = 1 * 60;  // Civitas: 1 minute
-        nLastPOWBlock = 200;
-        nMaturity = 15;
+        nTargetSpacing = 1 * 15;  // Civitas: 15 seconds
+        nLastPOWBlock = 39;
+        nMaturity = 2;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 51197; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 43199500 * COIN;
-        nZerocoinStartHeight = 201576;
-        nZerocoinStartTime = 1501776000;
+        nZerocoinStartHeight = 40;
         nBlockEnforceSerialRange = 1; //Enforce serial range starting this block
-        nBlockRecalculateAccumulators = 9908000; //Trigger a recalculation of accumulators
-        nBlockFirstFraudulent = 9891737; //First block that bad serials emerged
-        nBlockLastGoodCheckpoint = 9891730; //Last valid accumulator checkpoint
-        
+        nBlockRecalculateAccumulators = ~1; //Trigger a recalculation of accumulators
+        nBlockFirstFraudulent = ~1; //First block that bad serials emerged
+        nBlockLastGoodCheckpoint = ~1; //Last valid accumulator checkpoint
+
         //! Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime = 1515616140;
         genesis.nNonce = 79855;
 
-	    hashGenesisBlock = genesis.GetHash();
+        bnProofOfWorkLimit = ~uint256(0) >> 12;
+
+  	    hashGenesisBlock = genesis.GetHash();
         assert(hashGenesisBlock == uint256("0x000007cff63ef602a51bf074e384b3516f0dd202f14d52f7c8c9b1af9423ab2e"));
 
         vFixedSeeds.clear();
@@ -277,7 +276,7 @@ public:
 
         nPoolMaxTransactions = 2;
         strSporkKey = "04188441e39d99aa69068ee07d26980f459b84465bbd765c6ee15d1aec5b76b5aebb01b24be184a1d3a12af61276549d96cc9499d909f8afc183132837d18d643d";
-        strObfuscationPoolDummyAddress = "xp87cG8UEQgzs1Bk67Yk884C7pnQfAeo7q";
+        strObfuscationPoolDummyAddress = "Ceax8jHDQ1s2kHVjysEoTQncVdUrNBuXtp";
         nStartMasternodePayments = 1420837558; //Fri, 09 Jan 2015 21:05:58 GMT
         nBudget_Fee_Confirmations = 3; // Number of confirmations for the finalization fee. We have to make this very short
                                        // here because we only have a 8 block finalization window on testnet
