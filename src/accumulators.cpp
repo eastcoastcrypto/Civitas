@@ -247,18 +247,13 @@ bool InvalidCheckpointRange(int nHeight)
     return nHeight > Params().Zerocoin_Block_LastGoodCheckpoint() && nHeight < Params().Zerocoin_Block_RecalculateAccumulators();
 }
 
-bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator, AccumulatorWitness& witness, int nSecurityLevel, int& nMintsAdded, string& strError)
+bool GenerateAccumulatorWitness(const CZerocoinMint &mint, Accumulator& accumulator, AccumulatorWitness& witness, int nSecurityLevel, int& nMintsAdded, string& strError)
 {
-    uint256 txid;
-    if (!zerocoinDB->ReadCoinMint(coin.getValue(), txid)) {
-        LogPrint("zero","%s failed to read mint from db\n", __func__);
-        return false;
-    }
-
+    libzerocoin::PublicCoin coin(Params().Zerocoin_Params(), mint.GetValue(), mint.GetDenomination());
     CTransaction txMinted;
     uint256 hashBlock;
-    if (!GetTransaction(txid, txMinted, hashBlock)) {
-        LogPrint("zero","%s failed to read tx\n", __func__);
+    if (!GetTransaction(mint.GetTxHash(), txMinted, hashBlock)) {
+        LogPrintf("%s failed to read tx\n", __func__);
         return false;
     }
 
@@ -279,8 +274,10 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
         if (pindex->nHeight % 10 == 0) {
             nChanges++;
 
-            if (nChanges == 1)
+            if (nChanges == 1) {
                 nCheckpointBeforeMint = pindex->nAccumulatorCheckpoint;
+                break;
+            }
         }
         pindex = chainActive.Next(pindex);
     }
@@ -289,19 +286,20 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
     int nAccStartHeight = nHeightMintAdded - (nHeightMintAdded % 10);
 
     //If the checkpoint is from the recalculated checkpoint period, then adjust it
-    int nHeight_LastGoodCheckpoint = Params().Zerocoin_Block_LastGoodCheckpoint();
-    int nHeight_Recalculate = Params().Zerocoin_Block_RecalculateAccumulators();
-    if (pindex->nHeight < nHeight_Recalculate - 10 && pindex->nHeight > nHeight_LastGoodCheckpoint) {
+    if (pindex->nHeight < Params().Zerocoin_StartHeight()) {
         //The checkpoint before the mint will be the last good checkpoint
-        nCheckpointBeforeMint = chainActive[nHeight_LastGoodCheckpoint]->nAccumulatorCheckpoint;
-        nAccStartHeight = nHeight_LastGoodCheckpoint - 10;
+        nCheckpointBeforeMint = 0;
+        nAccStartHeight = Params().Zerocoin_AccumulatorStartHeight();
     }
 
     //Get the accumulator that is right before the cluster of blocks containing our mint was added to the accumulator
     CBigNum bnAccValue = 0;
-    if (GetAccumulatorValueFromDB(nCheckpointBeforeMint, coin.getDenomination(), bnAccValue)) {
+    if (GetAccumulatorValueFromDB(nCheckpointBeforeMint, mint.GetDenomination(), bnAccValue)) {
         if (bnAccValue > 0) {
             accumulator.setValue(bnAccValue);
+            witness.resetValue(accumulator, coin);
+        } else {
+            accumulator.setValue(Params().Zerocoin_Params()->accumulatorParams.accumulatorBase);
             witness.resetValue(accumulator, coin);
         }
     }
@@ -331,7 +329,7 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
 
         //if a new checkpoint was generated on this block, and we have added the specified amount of checkpointed accumulators,
         //then initialize the accumulator at this point and break
-        if (!InvalidCheckpointRange(pindex->nHeight) && (pindex->nHeight == nHeightStop || (nSecurityLevel != 100 && nCheckpointsAdded >= nSecurityLevel))) {
+        if (pindex->nHeight == nHeightStop || (nSecurityLevel != 100 && nCheckpointsAdded >= nSecurityLevel)) {
             uint32_t nChecksum = ParseChecksum(chainActive[pindex->nHeight + 10]->nAccumulatorCheckpoint, coin.getDenomination());
             CBigNum bnAccValue = 0;
             if (!zerocoinDB->ReadAccumulatorValue(nChecksum, bnAccValue)) {
@@ -343,7 +341,7 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
         }
 
         // if this block contains mints of the denomination that is being spent, then add them to the witness
-        if (pindex->MintedDenomination(coin.getDenomination())) {
+        if (pindex->nHeight < Params().Zerocoin_StartHeight() || pindex->MintedDenomination(coin.getDenomination())) {
             //grab mints from this block
             CBlock block;
             if(!ReadBlockFromDisk(block, pindex)) {
@@ -365,6 +363,11 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
                 if (pindex->nHeight == nHeightMintAdded && pubcoin.getValue() == coin.getValue())
                     continue;
 
+                //There are two invalid mints that were not accumulated - note this significantly slows down the witness
+                //it may be better finding those two invalid mints and hard coding a check against their value instead
+                if (!pubcoin.validate())
+                    continue;
+
                 witness.addRawValue(pubcoin.getValue());
                 ++nMintsAdded;
             }
@@ -380,13 +383,12 @@ bool GenerateAccumulatorWitness(const PublicCoin &coin, Accumulator& accumulator
     }
 
     // calculate how many mints of this denomination existed in the accumulator we initialized
-    int nZerocoinStartHeight = GetZerocoinStartHeight();
-    pindex = chainActive[nZerocoinStartHeight];
+    pindex = chainActive[Params().Zerocoin_AccumulatorStartHeight()];
     while (pindex->nHeight < nAccStartHeight) {
         nMintsAdded += count(pindex->vMintDenominationsInBlock.begin(), pindex->vMintDenominationsInBlock.end(), coin.getDenomination());
         pindex = chainActive[pindex->nHeight + 1];
     }
 
-    LogPrint("zero","%s : %d mints added to witness\n", __func__, nMintsAdded);
+    LogPrintf("%s : %d mints added to witness\n", __func__, nMintsAdded);
     return true;
 }
