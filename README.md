@@ -11,7 +11,7 @@ Civitas is a cutting edge cryptocurrency, with many features not available in mo
   technology used to secure the network and provide the above features, each Masternode is secured
   with a collateral of 10K CIV.
 
-More information at [CivitasCoin.com](http://www.civitascoin.com) Visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=2738543.0)
+More information at [CivitasCoin.co](https://civitascoin.co/) Visit our ANN thread at [BitcoinTalk](https://bitcointalk.org/index.php?topic=2738543.0)
 
 
 ### Coin Specs
