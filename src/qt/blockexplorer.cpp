@@ -1,3 +1,7 @@
+// Copyright (c) 2017-2018 The PIVX developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "blockexplorer.h"
 #include "bitcoinunits.h"
 #include "chainparams.h"
@@ -391,8 +395,10 @@ std::string AddressToString(const CBitcoinAddress& Address)
     /*
     CScript AddressScript;
     AddressScript.SetDestination(Address.Get());
+
     CAmount Sum = 0;
     bool fAddrIndex = false;
+
     if (!fAddrIndex)
         return ""; // it will take too long to find transactions by address
     else
