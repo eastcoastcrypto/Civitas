@@ -3678,11 +3678,6 @@ void CWallet::AutoCombineDust()
             // Combine to the threshold and not way above
             if (nTotalRewardsValue > nAutoCombineThreshold * COIN)
                 break;
-
-            // Around 226 bytes per input. We use 236 to be certain
-            txSizeEstimate += 236;
-            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200)
-                break;
         }
 
         //if no inputs found then return
