@@ -1662,6 +1662,7 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                     fIsSpendable = true;
                 if ((mine & ISMINE_MULTISIG) != ISMINE_NO)
                     fIsSpendable = true;
+
                 vCoins.emplace_back(COutput(pcoin, i, nDepth, fIsSpendable));
             }
         }
@@ -2273,7 +2274,6 @@ bool CWallet::GetBudgetSystemCollateralTX(CWalletTx& tx, uint256 hash, bool useI
     return true;
 }
 
-
 bool CWallet::ConvertList(std::vector<CTxIn> vCoins, std::vector<CAmount>& vecAmounts)
 {
     BOOST_FOREACH (CTxIn i, vCoins) {
@@ -2537,7 +2537,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     // The following split & combine thresholds are important to security
     // Should not be adjusted if you don't understand the consequences
     //int64_t nCombineThreshold = 0;
-
     txNew.vin.clear();
     txNew.vout.clear();
 
@@ -3680,8 +3679,8 @@ void CWallet::AutoCombineDust()
             if (nTotalRewardsValue > nAutoCombineThreshold * COIN)
                 break;
 
-            // Around 180 bytes per input. We use 190 to be certain
-            txSizeEstimate += 190;
+            // Around 226 bytes per input. We use 236 to be certain
+            txSizeEstimate += 236;
             if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200)
                 break;
         }
