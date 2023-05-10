@@ -178,6 +178,31 @@ bool IsBlockValueValid(const CBlock& block, CAmount nExpectedValue, CAmount nMin
     CBlockIndex* pindexPrev = chainActive.Tip();
     if (pindexPrev == NULL) return true;
 
+    if (pindexPrev->nHeight == 2503286)
+    {
+        return true;
+    }
+
+    if (pindexPrev->nHeight == 2503287)
+    {
+        return true;
+    }
+
+    if (pindexPrev->nHeight == 2503288)
+    {
+        return true;
+    }
+
+    if (pindexPrev->nHeight == 2503289)
+    {
+        return true;
+    }
+
+    if (pindexPrev->nHeight == 2503290)
+    {
+        return true;
+    }
+
     int nHeight = 0;
     if (pindexPrev->GetBlockHash() == block.hashPrevBlock) {
         nHeight = pindexPrev->nHeight + 1;

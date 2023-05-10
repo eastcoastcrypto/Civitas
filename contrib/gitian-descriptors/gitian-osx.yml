@@ -5,7 +5,7 @@ suites:
 - "trusty"
 architectures:
 - "amd64"
-packages: 
+packages:
 - "ca-certificates"
 - "curl"
 - "g++"

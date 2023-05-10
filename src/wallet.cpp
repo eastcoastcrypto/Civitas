@@ -1662,6 +1662,7 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                     fIsSpendable = true;
                 if ((mine & ISMINE_MULTISIG) != ISMINE_NO)
                     fIsSpendable = true;
+
                 vCoins.emplace_back(COutput(pcoin, i, nDepth, fIsSpendable));
             }
         }
@@ -2273,7 +2274,6 @@ bool CWallet::GetBudgetSystemCollateralTX(CWalletTx& tx, uint256 hash, bool useI
     return true;
 }
 
-
 bool CWallet::ConvertList(std::vector<CTxIn> vCoins, std::vector<CAmount>& vecAmounts)
 {
     BOOST_FOREACH (CTxIn i, vCoins) {
@@ -2412,10 +2412,24 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, CAmount> >& vecSend,
                     // TODO: pass in scriptChange instead of reservekey so
                     // change transaction isn't always pay-to-civitas-address
                     CScript scriptChange;
+                    bool combineChange = false;
 
                     // coin control: send change to custom address
-                    if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange))
+                    if (coinControl && !boost::get<CNoDestination>(&coinControl->destChange)) {
                         scriptChange = GetScriptForDestination(coinControl->destChange);
+
+                        vector<CTxOut>::iterator it = txNew.vout.begin();
+                        while (it != txNew.vout.end()) {
+                            if (scriptChange == it->scriptPubKey) {
+                                it->nValue += nChange;
+                                nChange = 0;
+                                reservekey.ReturnKey();
+                                combineChange = true;
+                                break;
+                            }
+                            ++it;
+                        }
+                    }
 
                     // no coin control: send change to newly generated address
                     else {
@@ -2435,18 +2449,20 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, CAmount> >& vecSend,
                         scriptChange = GetScriptForDestination(vchPubKey.GetID());
                     }
 
-                    CTxOut newTxOut(nChange, scriptChange);
+                    if (!combineChange) {
+                        CTxOut newTxOut(nChange, scriptChange);
 
-                    // Never create dust outputs; if we would, just
-                    // add the dust to the fee.
-                    if (newTxOut.IsDust(::minRelayTxFee)) {
-                        nFeeRet += nChange;
-                        nChange = 0;
-                        reservekey.ReturnKey();
-                    } else {
-                        // Insert change txn at random position:
-                        vector<CTxOut>::iterator position = txNew.vout.begin() + GetRandInt(txNew.vout.size() + 1);
-                        txNew.vout.insert(position, newTxOut);
+                        // Never create dust outputs; if we would, just
+                        // add the dust to the fee.
+                        if (newTxOut.IsDust(::minRelayTxFee)) {
+                            nFeeRet += nChange;
+                            nChange = 0;
+                            reservekey.ReturnKey();
+                        } else {
+                            // Insert change txn at random position:
+                            vector<CTxOut>::iterator position = txNew.vout.begin() + GetRandInt(txNew.vout.size() + 1);
+                            txNew.vout.insert(position, newTxOut);
+                        }
                     }
                 } else
                     reservekey.ReturnKey();
@@ -2521,7 +2537,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     // The following split & combine thresholds are important to security
     // Should not be adjusted if you don't understand the consequences
     //int64_t nCombineThreshold = 0;
-
     txNew.vin.clear();
     txNew.vout.clear();
 
@@ -3630,32 +3645,44 @@ void CWallet::AutoZeromint()
 
 void CWallet::AutoCombineDust()
 {
-    if (IsInitialBlockDownload() || IsLocked()) {
+    if (chainActive.Tip()->nTime < (GetAdjustedTime() - 300) || IsLocked()) {
         return;
     }
 
-    map<CBitcoinAddress, vector<COutput> > mapCoinsByAddress = AvailableCoinsByAddress(true, 0);
+    map<CBitcoinAddress, vector<COutput> > mapCoinsByAddress = AvailableCoinsByAddress(true, nAutoCombineThreshold * COIN);
 
     //coins are sectioned by address. This combination code only wants to combine inputs that belong to the same address
     for (map<CBitcoinAddress, vector<COutput> >::iterator it = mapCoinsByAddress.begin(); it != mapCoinsByAddress.end(); it++) {
         vector<COutput> vCoins, vRewardCoins;
         vCoins = it->second;
 
+        // We don't want the tx to be refused for being too large
+        // we use 50 bytes as a base tx size (2 output: 2*34 + overhead: 10 -> 90 to be certain)
+        unsigned int txSizeEstimate = 90;
+
         //find masternode rewards that need to be combined
         CCoinControl* coinControl = new CCoinControl();
         CAmount nTotalRewardsValue = 0;
         BOOST_FOREACH (const COutput& out, vCoins) {
+            if (!out.fSpendable)
+                continue;
             //no coins should get this far if they dont have proper maturity, this is double checking
             if (out.tx->IsCoinStake() && out.tx->GetDepthInMainChain() < COINBASE_MATURITY + 1)
-                continue;
-
-            if (out.Value() > nAutoCombineThreshold * COIN)
                 continue;
 
             COutPoint outpt(out.tx->GetHash(), out.i);
             coinControl->Select(outpt);
             vRewardCoins.push_back(out);
             nTotalRewardsValue += out.Value();
+
+            // Combine to the threshold and not way above
+            if (nTotalRewardsValue > nAutoCombineThreshold * COIN)
+                break;
+
+            // Around 180 bytes per input. We use 190 to be certain
+            txSizeEstimate += 190;
+            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200)
+                break;
         }
 
         //if no inputs found then return
@@ -3670,21 +3697,31 @@ void CWallet::AutoCombineDust()
         CScript scriptPubKey = GetScriptForDestination(it->first.Get());
         vecSend.push_back(make_pair(scriptPubKey, nTotalRewardsValue));
 
+        //Send change to same address
+        CTxDestination destMyAddress;
+        if (!ExtractDestination(scriptPubKey, destMyAddress)) {
+            LogPrintf("AutoCombineDust: failed to extract destination\n");
+            continue;
+        }
+        coinControl->destChange = destMyAddress;
+
         // Create the transaction and commit it to the network
         CWalletTx wtx;
         CReserveKey keyChange(this); // this change address does not end up being used, because change is returned with coin control switch
         string strErr;
         CAmount nFeeRet = 0;
 
-        //get the fee amount
-        CWalletTx wtxdummy;
-        CreateTransaction(vecSend, wtxdummy, keyChange, nFeeRet, strErr, coinControl, ALL_COINS, false, CAmount(0));
-        vecSend[0].second = nTotalRewardsValue - nFeeRet - 500;
+        // 10% safety margin to avoid "Insufficient funds" errors
+        vecSend[0].second = nTotalRewardsValue - (nTotalRewardsValue / 10);
 
         if (!CreateTransaction(vecSend, wtx, keyChange, nFeeRet, strErr, coinControl, ALL_COINS, false, CAmount(0))) {
             LogPrintf("AutoCombineDust createtransaction failed, reason: %s\n", strErr);
             continue;
         }
+
+        //we don't combine below the threshold unless the fees are 0 to avoid paying fees over fees over fees
+        if (nTotalRewardsValue < nAutoCombineThreshold * COIN && nFeeRet > 0)
+            continue;
 
         if (!CommitTransaction(wtx, keyChange)) {
             LogPrintf("AutoCombineDust transaction commit failed\n");

@@ -21,6 +21,8 @@ try :
 except ImportError:
     import httplib
 import sys
+import struct
+from binascii import hexlify, unhexlify
 
 settings = {}
 
@@ -71,7 +73,8 @@ class BitcoinRPC:
 	def response_is_error(resp_obj):
 		return 'error' in resp_obj and resp_obj['error'] is not None
 
-def get_block_hashes(settings, max_blocks_per_call=10000):
+def write_bootstrap_dat(settings, max_blocks_per_call=1000):
+	outF = open(settings['output_file'], "wb")
 	rpc = BitcoinRPC(settings['host'], settings['port'],
 			 settings['rpcuser'], settings['rpcpassword'])
 
@@ -87,20 +90,40 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
 			print('Cannot continue. Program will halt.')
 			return None
 
+		batch = []
+
 		for x,resp_obj in enumerate(reply):
 			if rpc.response_is_error(resp_obj):
 				print('JSON-RPC: error at height', height+x, ': ', resp_obj['error'], file=sys.stderr)
 				exit(1)
 			assert(resp_obj['id'] == x) # assume replies are in-sequence
-			if settings['rev_hash_bytes'] == 'true':
-				resp_obj['result'] = hex_switchEndian(resp_obj['result'])
-			print(resp_obj['result'])
+			hash = resp_obj['result']
+
+			batch.append(rpc.build_request(x, 'getblock', [hash, False]))
+
+		reply = rpc.execute(batch)
+		if reply is None:
+			print('Cannot continue. Program will halt.')
+			return None
+
+		for x,resp_obj in enumerate(reply):
+			if rpc.response_is_error(resp_obj):
+				print('JSON-RPC: error at height', height+x, ': ', resp_obj['error'], file=sys.stderr)
+				exit(1)
+			assert(resp_obj['id'] == x) # assume replies are in-sequence
+			block = resp_obj['result']
+
+			outF.write(settings['netmagic'])
+			outF.write(struct.pack('<I', int(len(block) / 2)))
+			outF.write(unhexlify(block.encode('ascii')))
 
 		height += num_blocks
+		print('At block height ', height)
+		outF.flush()
 
 if __name__ == '__main__':
 	if len(sys.argv) != 2:
-		print("Usage: linearize-hashes.py CONFIG-FILE")
+		print("Usage: linearize-allrpc.py CONFIG-FILE")
 		sys.exit(1)
 
 	f = open(sys.argv[1])
@@ -125,8 +148,6 @@ if __name__ == '__main__':
 		settings['min_height'] = 0
 	if 'max_height' not in settings:
 		settings['max_height'] = 1825000
-	if 'rev_hash_bytes' not in settings:
-		settings['rev_hash_bytes'] = 'false'
 	if 'rpcuser' not in settings or 'rpcpassword' not in settings:
 		print("Missing username and/or password in cfg file", file=stderr)
 		sys.exit(1)
@@ -135,7 +156,10 @@ if __name__ == '__main__':
 	settings['min_height'] = int(settings['min_height'])
 	settings['max_height'] = int(settings['max_height'])
 
-	# Force hash byte format setting to be lowercase to make comparisons easier.
-	settings['rev_hash_bytes'] = settings['rev_hash_bytes'].lower()
+	settings['netmagic'] = unhexlify(settings['netmagic'].encode('ascii'))
 
-	get_block_hashes(settings)
+	if 'output_file' not in settings:
+		print("Missing output file")
+		sys.exit(1)
+
+	write_bootstrap_dat(settings)
